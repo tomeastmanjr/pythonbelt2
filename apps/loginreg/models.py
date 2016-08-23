@@ -1,17 +1,14 @@
 from __future__ import unicode_literals
 from django.db import models
-
 import bcrypt
 import re
-
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+.[a-zA-Z]*$')
 
 class UserManager(models.Manager):
     def register(self, reg_data):
-        first_name = reg_data['first_name']
-        last_name = reg_data['last_name']
+        full_name = reg_data['full_name']
         email = reg_data['email']
         birthday = reg_data['birthday']
-        username = reg_data['username']
         password = reg_data['password']
         confirm_password = reg_data['confirm_password']
         hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
@@ -19,9 +16,9 @@ class UserManager(models.Manager):
             user = self.get(email=email)
         except:
             user = False
-        if len(first_name) >1 and len(first_name) >1 and len(username) >2 and len(password) >7 and password == confirm_password and not user:
+        if len(full_name) >2 and len(email) > 4 and EMAIL_REGEX.match(email) and birthday and len(password) >7 and password == confirm_password and not user:
         # still need to create our checks for birthday. maybe set up to have person be required to be 18
-            u = self.create(first_name=first_name, last_name=last_name, email=email, birthday=birthday, username=username, password=hashed)
+            u = self.create(full_name=full_name, email=email, birthday=birthday, password=hashed)
             print u
             print reg_data
             return (True,u)
@@ -38,11 +35,9 @@ class UserManager(models.Manager):
 
 
 class User(models.Model):
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
+    full_name = models.CharField(max_length=100)
     email = models.CharField(max_length=150)
     birthday = models.DateField()
-    username = models.CharField(max_length=60)
     password = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -9,7 +9,7 @@ def index(request):
 def login(request):
     user = User.objects.login(request.POST)
     if user[0]:
-        request.session['username']= user[1].username
+        request.session['full_name']= user[1].full_name
         request.session['id']= user[1].id
         return redirect('pythonbelt2app:index')
     messages.add_message(request, messages.SUCCESS, user[1])
@@ -19,7 +19,7 @@ def register(request):
     user = User.objects.register(request.POST)
     print user[0], user[1]
     if user[0]:
-        request.session['username']= user[1].username
+        request.session['full_name']= user[1].full_name
         request.session['id']= user[1].id
         return redirect('pythonbelt2app:index')
     messages.add_message(request, messages.SUCCESS, 'You screwed up!!!')

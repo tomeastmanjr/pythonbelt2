@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse
-from .models import Loan
+from .models import Appointment
 from ..loginreg.models import User
 from django.contrib import messages
 from datetime import datetime
