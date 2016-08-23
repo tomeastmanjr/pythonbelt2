@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Edit</title>
+  {% load staticfiles %}
+<link rel="stylesheet" href="{% static 'pythonbelt2app/css/style.css' %}"media="screen" title="no title"  charset="utf-8">
+<script src="{% static 'pythonbelt2app/js/main.js' %}" > </script>
+</head>
+<body>
+  <div id="top">
+    <a href="{% url 'pythonbelt2app:index' %}">Dashboard</a> |
+    <a href="{% url 'loginreg:logout' %}">Logout</a>
+  </div>
+  {% if messages %}
+    {% for message in messages %}
+      <h1>{{message}}</h1>
+    {% endfor %}
+  {% endif %}
+  <form action="{% url 'pythonbelt2app:update' appointment_id=appointment.id %}" method="POST">
+    {% csrf_token %}
+    <label for="task">Tasks:</label>
+    <input type="text" name="task" value="{{appointment.task}}">
+    <p></p>
+    <label for="status">Status:</label>
+    <select name="status">
+      <option value="" selected="selected"></option>
+      <option value="Done">Done</option>
+      <option value="Pending">Pending</option>
+      <option value="Missed">Missed</option>
+    <p></p>
+    <label for="start_date">Date:</label>
+    <input type="date" name="start_date" value="{{appointment.start_date}}">
+    <p></p>
+    <label for="start_time">Time:</label>
+    <input type="time" name="start_time" value="{{appointment.start_time}}">
+    <p></p>
+    <input type="submit" value="Update">
+  </form>
+
+</body>
+</html>

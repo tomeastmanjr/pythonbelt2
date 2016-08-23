@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Delete</title>
+  {% load staticfiles %}
+<link rel="stylesheet" href="{% static 'pythonbelt2app/css/style.css' %}"media="screen" title="no title"  charset="utf-8">
+<script src="{% static 'pythonbelt2app/js/main.js' %}" > </script>
+</head>
+<body>
+  <div id="top">
+    <a href="{% url 'loginreg:logout' %}">Logout</a>
+  </div>
+  <h3>Are you sure you want to delete the following appointment?</h3>
+  <p>Start Date: {{appointment.start_date}}</p>
+  <p>Start Time: {{appointment.start_time}}</p>
+  <p>Tasks: {{appointment.task}}</p>
+  <form class="" action="{% url 'pythonbelt2app:index' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" name="no" value="No">
+  </form>
+  <form action="{% url 'pythonbelt2app:destroy' appointment_id=appointment.id %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" name="yes" value="Yes! I want to delete this">
+  </form>
+</body>
+</html>
