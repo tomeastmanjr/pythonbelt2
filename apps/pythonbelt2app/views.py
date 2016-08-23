@@ -55,7 +55,7 @@ def update(request, appointment_id):
         a.start_date = datetime.strptime(request.POST["start_date"], '%Y-%m-%d')
         a.start_time = datetime.strptime(request.POST["start_time"], '%H:%M')
         # if not a.start_date < now:
-        if start_date:
+        if a.start_date:
             a.save()
         else:
             messages.add_message(request, messages.SUCCESS, 'Try again')
