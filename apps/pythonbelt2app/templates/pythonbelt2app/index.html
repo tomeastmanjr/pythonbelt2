@@ -34,8 +34,10 @@
       <td>{{appointment.task}}</td>
       <td>{{appointment.start_time}}</td>
       <td>{{appointment.status}}</td>
-      <td><a href="{% url 'pythonbelt2app:edit' appointment_id=appointment.id%}">Edit</a></td>
-      <td><a href="{% url 'pythonbelt2app:delete' appointment_id=appointment.id%}">Delete</a></td>
+      {% if appointment.status != "Done" %}
+        <td><a href="{% url 'pythonbelt2app:edit' appointment_id=appointment.id%}">Edit</a></td>
+        <td><a href="{% url 'pythonbelt2app:delete' appointment_id=appointment.id%}">Delete</a></td>
+      {% endif %}
     </tr>
   {% endfor %}
   </table>

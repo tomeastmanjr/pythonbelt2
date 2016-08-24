@@ -34,8 +34,8 @@ def create(request):
         task = request.POST["task"]
         start_date = datetime.strptime(request.POST["start_date"], '%Y-%m-%d')
         start_time = datetime.strptime(request.POST["start_time"], '%H:%M')
-        # if not start_date < now:
-        if start_date:
+        today = datetime(year=now.year, month=now.month, day=now.day)
+        if start_date >= today:
             appointment = Appointment.objects.create(task=task, start_date=start_date, start_time=start_time, creator=user)
             return redirect(reverse('pythonbelt2app:index'))
         else:
@@ -54,10 +54,11 @@ def update(request, appointment_id):
         a.status = request.POST["status"]
         a.start_date = datetime.strptime(request.POST["start_date"], '%Y-%m-%d')
         a.start_time = datetime.strptime(request.POST["start_time"], '%H:%M')
-        # if not a.start_date < now:
-        if a.start_date:
+        today = datetime(year=now.year, month=now.month, day=now.day)
+        if a.start_date >= today:
             a.save()
         else:
+            print a.start_time
             messages.add_message(request, messages.SUCCESS, 'Try again')
             a = Appointment.objects.get(id=appointment_id)
             return redirect(reverse('pythonbelt2app:edit', kwargs={"appointment_id":a.id}))

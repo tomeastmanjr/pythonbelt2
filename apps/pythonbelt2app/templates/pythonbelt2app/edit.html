@@ -26,16 +26,17 @@
     <p></p>
     <label for="status">Status:</label>
     <select name="status">
-      <option value="" selected="selected"></option>
+      <option value="current" selected="selected">{{appointment.status}}</option>
       <option value="Done">Done</option>
       <option value="Pending">Pending</option>
       <option value="Missed">Missed</option>
+    </select>
     <p></p>
     <label for="start_date">Date:</label>
-    <input type="date" name="start_date" value="{{appointment.start_date}}">
+    <input type="date" name="start_date" value="{{appointment.start_date|date:'Y-m-d'}}">
     <p></p>
     <label for="start_time">Time:</label>
-    <input type="time" name="start_time" value="{{appointment.start_time}}">
+    <input type="time" name="start_time" value="{{appointment.start_time|time:'H:i'}}">
     <p></p>
     <input type="submit" value="Update">
   </form>
